@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    //Main
+    //Main activity
     RecyclerView rv;
     SeriesAdapter adapter;
     ArrayList<Series> series;
