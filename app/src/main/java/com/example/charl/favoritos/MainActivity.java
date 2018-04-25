@@ -1,5 +1,6 @@
 package com.example.charl.favoritos;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,7 +24,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SeriesFrag.OnFragmentInteractionListener,Favoritos.OnFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -40,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     //Main activity
-    RecyclerView rv;
-    SeriesAdapter adapter;
-    ArrayList<Series> series;
-    LinearLayoutManager lManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,22 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-        series= new ArrayList<>();
-        int cont;
-
-        rv=findViewById(R.id.recycler);
-        rv.setHasFixedSize(true);
-        lManager= new LinearLayoutManager(this );
-        rv.setLayoutManager(lManager);
-
-        prepareSeries();
-        cont = series.size();
-
-
-        adapter=new SeriesAdapter(series);
-        rv.setAdapter(adapter);
-
 
 
     }
@@ -107,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -124,13 +111,22 @@ public class MainActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
+
+        public static Fragment newInstance(int sectionNumber) {
+            Fragment fragment = null;
+
+            switch(sectionNumber) {
+                case 1: fragment= new SeriesFrag();
+                break;
+
+                case 2: fragment= new Favoritos();
+                break;
+            }
+
             return fragment;
         }
+
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -162,17 +158,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
+
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            switch(position){
+                case 0:
+                    return "Series";
+
+                case 1:
+                    return "Favoritos";
+            }
+            return null;
+        }
+
+
+
     }
 
-    public void prepareSeries(){
-        series = new ArrayList<>();
-        series.add(new Series("Smesh Bras 4", "2", R.drawable.smash4, " LUCINA MAKES THIS ONE PERFECT"));
-        series.add(new Series("Smesh Bras brawl", "1",R.drawable.smash3, " The akward son of the family" ));
-        series.add(new Series("Smesh Bras Melee", "1", R.drawable.smash2, " Hardcore mode"));
-        series.add(new Series("Smesh bras 64", "1", R.drawable.smash, " Le classic"));
 
-    }
 
 }

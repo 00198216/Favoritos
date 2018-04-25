@@ -51,14 +51,33 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         holder.name.setText(series.get(position).getName());
         holder.img.setImageResource(series.get(position).getImg());
         holder.button.setOnClickListener(new View.OnClickListener(){
+            int state;
             @Override
             public void onClick(View view){
-                Toast.makeText(view.getContext(),"Descripcion:"+series.get(position).getDesc(), Toast.LENGTH_LONG).show();
+                if(validar(state)){
+                    Toast.makeText(view.getContext(),"Agrego "+ series.get(position).getName()+" a favoritos",Toast.LENGTH_LONG).show();
+                    state=1;
+                }
+                else{
+                    Toast.makeText(view.getContext(),"Removio "+ series.get(position).getName()+" de favoritos",Toast.LENGTH_LONG).show();
+                    state=0;
+                }
             }
         });
     }
 
-
+     public boolean validar(int estado){
+        int act=1;
+        boolean flag;
+        int desactivado;
+        if(act!=estado){
+            act=1;
+            return true;
+        }
+        else{
+            return false;
+        }
+     }
 
     @Override
     public int getItemCount(){
