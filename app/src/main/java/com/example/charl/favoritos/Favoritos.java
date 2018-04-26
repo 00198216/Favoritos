@@ -121,12 +121,22 @@ public  class Favoritos extends Fragment {
             while(iterator.hasNext()){
                 Series serie = (Series)iterator.next();
                 series.add(cont,serie);
+                int i=0;
+                for (i = 0; i < cont; ++i) {
+                    if(series.get(i)==series.get(cont)){
+                        series.remove(i);
+                        series2.remove(i);
+                        break;
+                    }
+                }
                 adapter.notifyItemInserted(cont);
                 adapter.notifyItemRangeChanged(cont,series.size());
+
+
+
                 cont++;
 
-                int i=0;
-               
+
             }
 
 
