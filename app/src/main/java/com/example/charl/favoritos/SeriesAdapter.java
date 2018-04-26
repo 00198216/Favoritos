@@ -23,6 +23,7 @@ import java.util.Locale;
 
 public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder>  {
     private ArrayList<Series> series;
+    public int contador=0;
 
     public static class SeriesViewHolder extends RecyclerView.ViewHolder {
         CardView card;
@@ -69,6 +70,8 @@ public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.S
 
                     series.get(position).setCheck(isChecked);
                       onVerClick(buttonView,position);
+                      Contador(contador);
+
             }
         });
 
@@ -110,6 +113,7 @@ public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.S
     }
 
     public abstract void onVerClick(View v,int pos);
+    public abstract void Contador(int cont);
 
 
 }

@@ -31,6 +31,7 @@ public class SeriesFrag extends Fragment {
     RecyclerView rv;
     SeriesAdapter adapter;
     ArrayList<Series> series;
+    ArrayList<Series> series2;
     LinearLayoutManager lManager;
 
 
@@ -86,6 +87,8 @@ public class SeriesFrag extends Fragment {
 
 
         series= new ArrayList<>();
+        series2= new ArrayList<>();
+
         lManager= new LinearLayoutManager(getActivity());
 
         rv.setLayoutManager(lManager);
@@ -100,7 +103,8 @@ public class SeriesFrag extends Fragment {
                     Favoritos frag = new Favoritos();
 
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("Pass",series.get(pos));
+                    series2.add(series.get(pos));
+                    bundle.putSerializable("Pass",series2);
 
                     frag.setArguments(bundle);
                     final FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -108,6 +112,11 @@ public class SeriesFrag extends Fragment {
                     ft.commit();
                 }
             }
+
+            public void Contador(int cont){
+
+            }
+
         };
 
 

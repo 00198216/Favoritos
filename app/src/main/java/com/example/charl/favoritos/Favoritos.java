@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -29,8 +30,10 @@ public  class Favoritos extends Fragment {
     RecyclerView rv;
     SeriesAdapter adapter;
     ArrayList<Series> series;
+    ArrayList<Series> series2;
     LinearLayoutManager lManager;
     Bundle bundle;
+    Iterator iterator;
 
 
 
@@ -89,6 +92,8 @@ public  class Favoritos extends Fragment {
 
 
         series= new ArrayList<>();
+        series2= new ArrayList<>();
+
         lManager= new LinearLayoutManager(getActivity());
 
         rv.setLayoutManager(lManager);
@@ -98,15 +103,34 @@ public  class Favoritos extends Fragment {
         adapter=new SeriesAdapter(series){
             @Override
             public void onVerClick(View v, int pos) {
+
+            }
+
+            @Override
+            public void Contador(int cont) {
+
             }
         };
         if(bundle != null){
 
-            Series serie= (Series)bundle.getSerializable("Pass");
+            int cont=0;
 
-            series.add(0,serie);
-            adapter.notifyItemInserted(0);
-            adapter.notifyItemRangeChanged(0,series.size());
+            series2= (ArrayList<Series>) bundle.getSerializable("Pass");
+            iterator=series2.listIterator();
+
+            while(iterator.hasNext()){
+                Series serie = (Series)iterator.next();
+                series.add(cont,serie);
+                adapter.notifyItemInserted(cont);
+                adapter.notifyItemRangeChanged(cont,series.size());
+                cont++;
+
+                int i=0;
+               
+            }
+
+
+
         }
 
 

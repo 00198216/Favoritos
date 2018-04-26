@@ -24,7 +24,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements SeriesFrag.OnFragmentInteractionListener,Favoritos.OnFragmentInteractionListener{
+public  class MainActivity extends AppCompatActivity implements SeriesFrag.OnFragmentInteractionListener,Favoritos.OnFragmentInteractionListener{
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -177,7 +178,5 @@ public class MainActivity extends AppCompatActivity implements SeriesFrag.OnFrag
 
 
     }
-
-
 
 }
