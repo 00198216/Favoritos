@@ -1,27 +1,39 @@
 package com.example.charl.favoritos;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
+public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder>  {
     private ArrayList<Series> series;
 
     public static class SeriesViewHolder extends RecyclerView.ViewHolder {
         CardView card;
         TextView name;
         ImageView img;
-        Button button;
+        CheckBox button;
+        Boolean Checked;
         Context cxt;
+
+
+
 
         public SeriesViewHolder(View itemView){
             super(itemView);
@@ -50,16 +62,29 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     public void onBindViewHolder(SeriesViewHolder holder, final int position){
         holder.name.setText(series.get(position).getName());
         holder.img.setImageResource(series.get(position).getImg());
+        holder.button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+                    series.get(position).setCheck(isChecked);
+                      onVerClick(buttonView,position);
+            }
+        });
+
         holder.button.setOnClickListener(new View.OnClickListener(){
             int state;
+
             @Override
             public void onClick(View view){
-                if(validar(state)){
-                    Toast.makeText(view.getContext(),"Agrego "+ series.get(position).getName()+" a favoritos",Toast.LENGTH_LONG).show();
-                    state=1;
+                if(validar(state)) {
+                    Toast.makeText(view.getContext(), "Agrego " + series.get(position).getName() + " a favoritos", Toast.LENGTH_LONG).show();
+                    state = 1;
+
+
                 }
                 else{
-                    Toast.makeText(view.getContext(),"Removio "+ series.get(position).getName()+" de favoritos",Toast.LENGTH_LONG).show();
+
                     state=0;
                 }
             }
@@ -83,4 +108,8 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     public int getItemCount(){
         return series.size();
     }
+
+    public abstract void onVerClick(View v,int pos);
+
+
 }

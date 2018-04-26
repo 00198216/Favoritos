@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ public class SeriesFrag extends Fragment {
     SeriesAdapter adapter;
     ArrayList<Series> series;
     LinearLayoutManager lManager;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -88,7 +91,25 @@ public class SeriesFrag extends Fragment {
         rv.setLayoutManager(lManager);
         prepareSeries();
 
-        adapter=new SeriesAdapter(series);
+        adapter=new SeriesAdapter(series){
+            @Override
+            public void onVerClick(View v, int pos) {
+
+                if(series.get(pos).getCheck()) {
+
+                    SeriesFrag frag = new SeriesFrag();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("Pass",series.get(pos));
+
+                    frag.setArguments(bundle);
+                    final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.Favor, frag);
+                    ft.commit();
+                }
+            }
+        };
+
 
         rv.setAdapter(adapter);
 

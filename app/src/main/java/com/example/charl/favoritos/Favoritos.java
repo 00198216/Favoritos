@@ -1,12 +1,19 @@
 package com.example.charl.favoritos;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 /**
@@ -17,7 +24,15 @@ import android.view.ViewGroup;
  * Use the {@link Favoritos#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Favoritos extends Fragment {
+public  class Favoritos extends Fragment {
+
+    RecyclerView rv;
+    SeriesAdapter adapter;
+    ArrayList<Series> series;
+    LinearLayoutManager lManager;
+    Bundle bundle = this.getArguments();
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +79,38 @@ public class Favoritos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favoritos, container, false);
+
+        View vista=inflater.inflate(R.layout.fragment_favoritos, container, false);
+
+
+
+        rv=  vista.findViewById(R.id.recycler2);
+
+
+        series= new ArrayList<>();
+        lManager= new LinearLayoutManager(getActivity());
+
+        rv.setLayoutManager(lManager);
+
+
+        adapter=new SeriesAdapter(series){
+            @Override
+            public void onVerClick(View v, int pos) {
+            }
+        };
+        if(bundle != null){
+
+            Series serie= (Series)bundle.getSerializable("Pass");
+
+            series.add(0,serie);
+            adapter.notifyItemInserted(0);
+            adapter.notifyItemRangeChanged(0,series.size());
+        }
+
+
+        rv.setAdapter(adapter);
+
+        return vista;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +151,5 @@ public class Favoritos extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
