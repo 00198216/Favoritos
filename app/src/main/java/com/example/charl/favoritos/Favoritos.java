@@ -30,7 +30,8 @@ public  class Favoritos extends Fragment {
     SeriesAdapter adapter;
     ArrayList<Series> series;
     LinearLayoutManager lManager;
-    Bundle bundle = this.getArguments();
+    Bundle bundle;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -92,6 +93,7 @@ public  class Favoritos extends Fragment {
 
         rv.setLayoutManager(lManager);
 
+        bundle = getArguments();
 
         adapter=new SeriesAdapter(series){
             @Override

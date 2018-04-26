@@ -97,7 +97,7 @@ public class SeriesFrag extends Fragment {
 
                 if(series.get(pos).getCheck()) {
 
-                    SeriesFrag frag = new SeriesFrag();
+                    Favoritos frag = new Favoritos();
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("Pass",series.get(pos));
